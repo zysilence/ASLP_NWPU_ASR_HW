@@ -3,9 +3,12 @@
 #   Preamble.
 ########################################################################
 
+OPTFLAGS = -I/opt/homebrew/Cellar/boost/1.85.0/include -g
+
 ifeq ($(OPTFLAGS),)
 	OPTFLAGS = -g
 endif
+
 
 CXX = g++
 CXXFLAGS = -Wall -std=c++11
