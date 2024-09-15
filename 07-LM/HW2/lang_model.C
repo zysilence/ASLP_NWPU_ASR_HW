@@ -25,6 +25,7 @@ LangModel::LangModel(const map<string, string>& params)
   while (inStrm.peek() != EOF) {
     //  Read line, split into tokens, convert to indices, count n-grams.
     getline(inStrm, lineStr);
+    //cout << "Line: " << lineStr << endl;
     split_string(lineStr, wordList);
     convert_words_to_indices(wordList, wordIdxList, get_sym_table(),
                              get_ngram_length(), get_bos_index(),
@@ -98,6 +99,18 @@ void LangModel::count_sentence_ngrams(const vector<int>& wordList) {
       auto begin = end - m_n + n;
       vector<int> histNgram(begin, end);
       vector<int> ngram(begin, end + 1);
+      /*
+      cout << "end:" << end - wordList.begin() << "; begin:" << begin - wordList.begin() << endl;
+      cout << "histNgram: "; 
+      for (auto i = histNgram.begin(); i != histNgram.end(); i++) {
+        std::cout << *i << ' ';
+      }
+      cout << "ngram: "; 
+      for (auto i = ngram.begin(); i != ngram.end(); i++) {
+        std::cout << *i << ' ';
+      }
+      cout << endl;
+      */
       m_histCounts.incr_count(histNgram);
       if (m_predCounts.incr_count(ngram) == 1) {
         m_histOnePlusCounts.incr_count(histNgram);
